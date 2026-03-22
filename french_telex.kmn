@@ -30,8 +30,6 @@ c   a\f -> af
 c   o\/ -> o/
 c   c\w -> cw
 c   \\  -> \
-c   ass -> as
-c   ess -> es
 
 store(&NAME) 'French Telex'
 store(&COPYRIGHT) 'Copyright (c) 2026 Kyle Pham'
@@ -99,18 +97,6 @@ c Acute accent: French-oriented default, only on e/E.
 'U' + 's' > U+00DA
 'u' + 'S' > U+00DA
 'U' + 'S' > U+00DA
-
-c Doubled acute suffix reverts to a literal sequence for common cases.
-U+00E1 + 's' > 'as'
-U+00C1 + 's' > 'As'
-U+00E9 + 's' > 'es'
-U+00C9 + 's' > 'Es'
-U+00ED + 's' > 'is'
-U+00CD + 's' > 'Is'
-U+00F3 + 's' > 'os'
-U+00D3 + 's' > 'Os'
-U+00FA + 's' > 'us'
-U+00DA + 's' > 'Us'
 
 c Grave accent: a, e, u
 'a' + 'f' > U+00E0

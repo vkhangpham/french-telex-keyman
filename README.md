@@ -25,9 +25,8 @@ It is designed for people who already type with Vietnamese Telex muscle memory a
 Two ways to keep trigger sequences literal:
 
 - Explicit escape with backslash: `a\s` -> `as`, `e\s` -> `es`, `c\w` -> `cw`
-- Double the acute suffix: `ass` -> `as`, `ess` -> `es`
 
-The backslash escape is the safest and most general rule. The doubled-`s` fallback is only there for fast common cases.
+The backslash escape is the only literal-text rule. This avoids ambiguous cases in real French words.
 
 ## Word Boundaries
 
