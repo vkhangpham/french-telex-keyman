@@ -4,6 +4,8 @@ French Telex is a custom Keyman keyboard for typing French with Telex-like postf
 
 It is designed for people who already type with Vietnamese Telex muscle memory and want French accents without switching to a positional French layout such as Canadian CSA.
 
+French version: [README.fr.md](/Users/kylepham/Code/keyman-french-telex/README.fr.md)
+
 ## Install
 
 1. Install Keyman.
