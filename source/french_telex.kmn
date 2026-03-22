@@ -1,0 +1,128 @@
+c French Telex - a small Keyman keyboard for French with Telex-like postfix rules
+c
+c Typing model:
+c   es  -> é
+c   af  -> à
+c   ef  -> è
+c   uf  -> ù
+c   aa  -> â
+c   ee  -> ê
+c   ii  -> î
+c   oo  -> ô
+c   uu  -> û
+c   aw  -> ä
+c   ew  -> ë
+c   iw  -> ï
+c   ow  -> ö
+c   uw  -> ü
+c   yw  -> ÿ
+c   cc  -> ç
+c   o/  -> œ
+c   a/  -> æ
+c
+c Escape literal trigger characters with backslash:
+c   e\s -> es
+c   a\f -> af
+c   o\/ -> o/
+c   c\c -> cc
+c   \\  -> \
+
+store(&NAME) 'French Telex'
+store(&COPYRIGHT) 'Copyright (c) 2026 Kyle Pham'
+store(&VERSION) '10.0'
+store(&KEYBOARDVERSION) '1.0'
+store(&TARGETS) 'macosx windows linux'
+store(&MNEMONICLAYOUT) '1'
+
+begin Unicode > use(main)
+
+store(wordchars) 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàÀâÂæÆçÇèÈéÉêÊëËîÎïÏôÔœŒùÙûÛüÜÿŸ'
+store(dia_base) 'aeiouyAEIOUY'
+store(dia_out)  'äëïöüÿÄËÏÖÜŸ'
+
+group(main) using keys
+
+c Escape prefix: backslash suppresses the next trigger character.
++ '\' > deadkey(1)
+deadkey(1) + '\' > '\'
+deadkey(1) + 's' > 's'
+deadkey(1) + 'S' > 'S'
+deadkey(1) + 'f' > 'f'
+deadkey(1) + 'F' > 'F'
+deadkey(1) + 'w' > 'w'
+deadkey(1) + 'W' > 'W'
+deadkey(1) + 'c' > 'c'
+deadkey(1) + 'C' > 'C'
+deadkey(1) + '/' > '/'
+
+c Word boundary: if you type space and then backspace, composition on the previous word stays frozen.
+any(wordchars) + ' ' > index(wordchars,1) deadkey(2) ' '
+
+c Cedilla
+'c' + 'c' > U+00E7
+'C' + 'c' > U+00C7
+'c' + 'C' > U+00C7
+'C' + 'C' > U+00C7
+
+c Ligatures
+'o' + '/' > U+0153
+'O' + '/' > U+0152
+'a' + '/' > U+00E6
+'A' + '/' > U+00C6
+
+c Acute accent: French-oriented default, only on e/E.
+'e' + 's' > U+00E9
+'E' + 's' > U+00C9
+'e' + 'S' > U+00C9
+'E' + 'S' > U+00C9
+
+c Grave accent: a, e, u
+'a' + 'f' > U+00E0
+'A' + 'f' > U+00C0
+'a' + 'F' > U+00C0
+'A' + 'F' > U+00C0
+
+'e' + 'f' > U+00E8
+'E' + 'f' > U+00C8
+'e' + 'F' > U+00C8
+'E' + 'F' > U+00C8
+
+'u' + 'f' > U+00F9
+'U' + 'f' > U+00D9
+'u' + 'F' > U+00D9
+'U' + 'F' > U+00D9
+
+c Circumflex: doubled vowel, Telex-like
+'a' + 'a' > U+00E2
+'A' + 'a' > U+00C2
+'a' + 'A' > U+00C2
+'A' + 'A' > U+00C2
+
+'e' + 'e' > U+00EA
+'E' + 'e' > U+00CA
+'e' + 'E' > U+00CA
+'E' + 'E' > U+00CA
+
+'i' + 'i' > U+00EE
+'I' + 'i' > U+00CE
+'i' + 'I' > U+00CE
+'I' + 'I' > U+00CE
+
+'o' + 'o' > U+00F4
+'O' + 'o' > U+00D4
+'o' + 'O' > U+00D4
+'O' + 'O' > U+00D4
+
+'u' + 'u' > U+00FB
+'U' + 'u' > U+00DB
+'u' + 'U' > U+00DB
+'U' + 'U' > U+00DB
+
+'y' + 'y' > U+0177
+'Y' + 'y' > U+0176
+'y' + 'Y' > U+0176
+'Y' + 'Y' > U+0176
+
+c Diaeresis: vowel + x
+any(dia_base) + 'w' > index(dia_out,1)
+any(dia_base) + 'W' > index(dia_out,1)
