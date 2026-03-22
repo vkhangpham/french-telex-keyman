@@ -1,7 +1,11 @@
 c French Telex - a small Keyman keyboard for French with Telex-like postfix rules
 c
 c Typing model:
+c   as  -> á
 c   es  -> é
+c   is  -> í
+c   os  -> ó
+c   us  -> ú
 c   af  -> à
 c   ef  -> è
 c   uf  -> ù
@@ -16,7 +20,7 @@ c   iw  -> ï
 c   ow  -> ö
 c   uw  -> ü
 c   yw  -> ÿ
-c   cc  -> ç
+c   cw  -> ç
 c   o/  -> œ
 c   a/  -> æ
 c
@@ -24,8 +28,10 @@ c Escape literal trigger characters with backslash:
 c   e\s -> es
 c   a\f -> af
 c   o\/ -> o/
-c   c\c -> cc
+c   c\w -> cw
 c   \\  -> \
+c   ass -> as
+c   ess -> es
 
 store(&NAME) 'French Telex'
 store(&COPYRIGHT) 'Copyright (c) 2026 Kyle Pham'
@@ -51,18 +57,16 @@ deadkey(1) + 'f' > 'f'
 deadkey(1) + 'F' > 'F'
 deadkey(1) + 'w' > 'w'
 deadkey(1) + 'W' > 'W'
-deadkey(1) + 'c' > 'c'
-deadkey(1) + 'C' > 'C'
 deadkey(1) + '/' > '/'
 
 c Word boundary: if you type space and then backspace, composition on the previous word stays frozen.
 any(wordchars) + ' ' > index(wordchars,1) deadkey(2) ' '
 
 c Cedilla
-'c' + 'c' > U+00E7
-'C' + 'c' > U+00C7
-'c' + 'C' > U+00C7
-'C' + 'C' > U+00C7
+'c' + 'w' > U+00E7
+'C' + 'w' > U+00C7
+'c' + 'W' > U+00C7
+'C' + 'W' > U+00C7
 
 c Ligatures
 'o' + '/' > U+0153
@@ -71,10 +75,42 @@ c Ligatures
 'A' + '/' > U+00C6
 
 c Acute accent: French-oriented default, only on e/E.
+'a' + 's' > U+00E1
+'A' + 's' > U+00C1
+'a' + 'S' > U+00C1
+'A' + 'S' > U+00C1
+
 'e' + 's' > U+00E9
 'E' + 's' > U+00C9
 'e' + 'S' > U+00C9
 'E' + 'S' > U+00C9
+
+'i' + 's' > U+00ED
+'I' + 's' > U+00CD
+'i' + 'S' > U+00CD
+'I' + 'S' > U+00CD
+
+'o' + 's' > U+00F3
+'O' + 's' > U+00D3
+'o' + 'S' > U+00D3
+'O' + 'S' > U+00D3
+
+'u' + 's' > U+00FA
+'U' + 's' > U+00DA
+'u' + 'S' > U+00DA
+'U' + 'S' > U+00DA
+
+c Doubled acute suffix reverts to a literal sequence for common cases.
+U+00E1 + 's' > 'as'
+U+00C1 + 's' > 'As'
+U+00E9 + 's' > 'es'
+U+00C9 + 's' > 'Es'
+U+00ED + 's' > 'is'
+U+00CD + 's' > 'Is'
+U+00F3 + 's' > 'os'
+U+00D3 + 's' > 'Os'
+U+00FA + 's' > 'us'
+U+00DA + 's' > 'Us'
 
 c Grave accent: a, e, u
 'a' + 'f' > U+00E0

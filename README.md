@@ -1,59 +1,51 @@
 # French Telex for Keyman
 
-This is a small Keyman rule set for typing French with a Vietnamese-Telex-like postfix style.
+French Telex is a custom Keyman keyboard for typing French with Telex-like postfix rules on macOS, Windows, and Linux.
 
-Files:
+It is designed for people who already type with Vietnamese Telex muscle memory and want French accents without switching to a positional French layout such as Canadian CSA.
 
-- `french_telex.kmn`: the keyboard source
+## Install
 
-Default mappings:
+1. Install Keyman.
+2. Open [build/french_telex.kmp](/Users/kylepham/Code/keyman-french-telex/build/french_telex.kmp).
+3. Add `Keyman` as an input source in macOS.
+4. Select `French Telex` from the Keyman keyboard menu.
 
-- `es` -> `é`
-- `af` -> `à`
-- `ef` -> `è`
-- `uf` -> `ù`
-- `aa` -> `â`
-- `ee` -> `ê`
-- `ii` -> `î`
-- `oo` -> `ô`
-- `uu` -> `û`
-- `aw` -> `ä`
-- `ew` -> `ë`
-- `iw` -> `ï`
-- `ow` -> `ö`
-- `uw` -> `ü`
-- `yw` -> `ÿ`
-- `cc` -> `ç`
-- `o/` -> `œ`
-- `a/` -> `æ`
+## Typing Rules
 
-Literal escape:
+- Acute: `as es is os us` -> `á é í ó ú`
+- Grave: `af ef uf` -> `à è ù`
+- Circumflex: `aa ee ii oo uu` -> `â ê î ô û`
+- Diaeresis: `aw ew iw ow uw yw` -> `ä ë ï ö ü ÿ`
+- Cedilla: `cw` -> `ç`
+- Ligatures: `o/` -> `œ`, `a/` -> `æ`
 
-- Prefix the trigger with `\` to keep it literal.
-- `e\s` -> `es`
-- `a\f` -> `af`
-- `o\/` -> `o/`
-- `c\c` -> `cc`
-- `\\` -> `\`
+## Literal Text
 
-Examples:
+Two ways to keep trigger sequences literal:
+
+- Explicit escape with backslash: `a\s` -> `as`, `e\s` -> `es`, `c\w` -> `cw`
+- Double the acute suffix: `ass` -> `as`, `ess` -> `es`
+
+The backslash escape is the safest and most general rule. The doubled-`s` fallback is only there for fast common cases.
+
+## Word Boundaries
+
+Typing a space inserts an invisible word-boundary marker. If you type `space`, then `backspace`, accent rules no longer modify the previous word.
+
+Example:
+
+- `a` then `space` then `backspace` then `s` -> `as`
+
+## Examples
 
 - `eslesves` -> `élévé`
-- `franccais` -> `français`
-- `garcon` stays `garcon`
+- `francwais` -> `français`
 - `maiitre` -> `maître`
-- `hotel` stays `hotel`; `hôtel` is `hootel`
+- `Noewel` -> `Noël`
+- `hootel` -> `hôtel`
 
-How to use on macOS:
+## Source
 
-1. Build this `.kmn` into a `.kmp` package with Keyman Developer or the Keyman compiler.
-2. Install the package into Keyman.
-3. Add `Keyman` as a macOS input source.
-4. Select the `French Telex` keyboard from the Keyman menu.
-
-Notes:
-
-- Acute is intentionally limited to `e + s` to avoid too many false conversions like `as`, `is`, or `us`.
-- Circumflex uses doubled vowels because that is the closest low-friction mapping to existing Telex muscle memory.
-- Diaeresis uses `w`.
-- A space inserts an invisible word-boundary marker. If you type `space`, then `backspace`, accent rules no longer modify the previous word. Example: `a` then `space` then `backspace` then `s` gives literal `as`, not an accented letter.
+- Main Keyman source: `source/french_telex.kmn`
+- Build command: `kmc build /Users/kylepham/Code/keyman-french-telex`
