@@ -41,7 +41,7 @@ Example:
 - `eslesves` -> `élévé`
 - `francwais` -> `français`
 - `maiitre` -> `maître`
-- `Noewel` -> `Noël`
+- `Noewl` -> `Noël`
 - `hootel` -> `hôtel`
 
 ## Source
