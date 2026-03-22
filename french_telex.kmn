@@ -57,8 +57,11 @@ deadkey(1) + 'w' > 'w'
 deadkey(1) + 'W' > 'W'
 deadkey(1) + '/' > '/'
 
-c Word boundary: if you type space and then backspace, composition on the previous word stays frozen.
-any(wordchars) + ' ' > index(wordchars,1) deadkey(2) ' '
+c Word boundary: mark the end of a word on space.
+any(wordchars) + ' ' > index(wordchars,1) deadkey(boundary) ' '
+
+c Preserve the boundary marker if the user deletes the space again.
+deadkey(boundary) ' ' + [K_BKSP] > deadkey(boundary)
 
 c Cedilla
 'c' + 'w' > U+00E7

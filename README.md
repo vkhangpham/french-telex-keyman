@@ -30,7 +30,7 @@ The backslash escape is the only literal-text rule. This avoids ambiguous cases 
 
 ## Word Boundaries
 
-Typing a space inserts an invisible word-boundary marker. If you type `space`, then `backspace`, accent rules no longer modify the previous word.
+Typing a space inserts an invisible word-boundary marker. A custom backspace rule preserves that marker if you then delete the space again, so accent rules no longer modify the previous word.
 
 Example:
 
