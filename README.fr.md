@@ -9,9 +9,10 @@ Version anglaise : [README.md](/Users/kylepham/Code/keyman-french-telex/README.m
 ## Installation
 
 1. Installez Keyman.
-2. Ouvrez [build/french_telex.kmp](/Users/kylepham/Code/keyman-french-telex/build/french_telex.kmp).
-3. Ajoutez `Keyman` comme source d'entrée dans macOS.
-4. Sélectionnez `French Telex` dans le menu des claviers Keyman.
+2. Téléchargez le fichier `french_telex.kmp` le plus récent depuis [GitHub Releases](https://github.com/vkhangpham/french-telex-keyman/releases/latest).
+3. Ouvrez le paquet `.kmp` téléchargé.
+4. Ajoutez `Keyman` comme source d'entrée dans macOS.
+5. Sélectionnez `French Telex` dans le menu des claviers Keyman.
 
 ## Règles de saisie
 
@@ -64,3 +65,5 @@ Certains raccourcis courants ne s'étendent qu'après deux frappes sur `espace`.
 
 - Source principale Keyman : `source/french_telex.kmn`
 - Commande de build : `kmc build /Users/kylepham/Code/keyman-french-telex`
+- La sortie de build locale est générée dans `build/`
+- Les versions taguées publient `french_telex.kmp` et les artefacts associés dans GitHub Releases via GitHub Actions

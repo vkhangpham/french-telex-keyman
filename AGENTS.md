@@ -9,7 +9,7 @@ The project is intentionally small and source-driven:
 - `source/readme.htm` and `source/welcome.htm` are package-facing HTML docs.
 - `french_telex.kpj` is the Keyman Developer project file.
 - `README.md` and `README.fr.md` document installation and typing behavior.
-- Build output is expected under `build/`, with the package installed from `build/french_telex.kmp`.
+- Local build output is generated under `build/`, and tagged releases publish the package from GitHub Releases instead of committing build artifacts.
 
 The keyboard is designed for users who already have Vietnamese Telex muscle memory and want to type French accents without switching to a positional French layout.
 
