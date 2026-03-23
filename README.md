@@ -62,6 +62,7 @@ Some common shortcuts expand only when you press `space` twice after the shortcu
 ## Source
 
 - Main Keyman source: `source/french_telex.kmn`
+- Customization and local build guide: [`CONTRIBUTING.md`](/Users/kylepham/Code/keyman-french-telex/CONTRIBUTING.md)
 - Build command: `kmc build /Users/kylepham/Code/keyman-french-telex`
 - Local build output is generated under `build/`
 - Tagged releases publish `french_telex.kmp` and related artifacts to GitHub Releases via GitHub Actions

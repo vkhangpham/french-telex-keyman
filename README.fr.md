@@ -64,6 +64,7 @@ Certains raccourcis courants ne s'étendent qu'après deux frappes sur `espace`.
 ## Source
 
 - Source principale Keyman : `source/french_telex.kmn`
+- Guide de personnalisation et de build local : [`CONTRIBUTING.md`](/Users/kylepham/Code/keyman-french-telex/CONTRIBUTING.md)
 - Commande de build : `kmc build /Users/kylepham/Code/keyman-french-telex`
 - La sortie de build locale est générée dans `build/`
 - Les versions taguées publient `french_telex.kmp` et les artefacts associés dans GitHub Releases via GitHub Actions
