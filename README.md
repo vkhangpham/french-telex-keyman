@@ -38,6 +38,18 @@ Example:
 
 - `a` then `space` then `backspace` then `s` -> `as`
 
+## Double-Space Shortcuts
+
+Some common shortcuts expand only when you press `space` twice after the shortcut. The first space keeps the shortcut literal; the second space commits the expansion, so it won't trigger inside a larger word.
+
+- `c1` then `space` then `space` -> `c'est `
+- `c2` then `space` then `space` -> `ce sont `
+- `qcq` then `space` then `space` -> `qu'est-ce que `
+- `ya` then `space` then `space` -> `il y a `
+- `nya` then `space` then `space` -> `il n'y a `
+- `qun` then `space` then `space` -> `quelqu'un `
+- `qch` then `space` then `space` -> `quelque chose `
+
 ## Examples
 
 - `eslesves` -> `élévé`

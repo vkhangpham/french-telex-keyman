@@ -40,6 +40,18 @@ Exemple :
 
 - `a` puis `espace` puis `backspace` puis `s` -> `as`
 
+## Raccourcis par double espace
+
+Certains raccourcis courants ne s'étendent qu'après deux frappes sur `espace`. Le premier espace laisse le raccourci tel quel ; le second valide l'expansion, ce qui évite un déclenchement au milieu d'un mot plus long.
+
+- `c1` puis `espace` puis `espace` -> `c'est `
+- `c2` puis `espace` puis `espace` -> `ce sont `
+- `qcq` puis `espace` puis `espace` -> `qu'est-ce que `
+- `ya` puis `espace` puis `espace` -> `il y a `
+- `nya` puis `espace` puis `espace` -> `il n'y a `
+- `qun` puis `espace` puis `espace` -> `quelqu'un `
+- `qch` puis `espace` puis `espace` -> `quelque chose `
+
 ## Exemples
 
 - `eslesves` -> `élévé`

@@ -24,6 +24,15 @@ c   cw  -> ç
 c   o/  -> œ
 c   a/  -> æ
 c
+c Double-space shortcuts:
+c   c1  -> c'est
+c   c2  -> ce sont
+c   qcq -> qu'est-ce que
+c   ya  -> il y a
+c   nya -> il n'y a
+c   qun -> quelqu'un
+c   qch -> quelque chose
+c
 c Escape literal trigger characters with backslash:
 c   e\s -> es
 c   a\f -> af
@@ -62,6 +71,29 @@ any(wordchars) + ' ' > index(wordchars,1) deadkey(boundary) ' '
 
 c Preserve the boundary marker if the user deletes the space again.
 deadkey(boundary) ' ' + [K_BKSP] > deadkey(boundary)
+
+c Double-space shortcuts: expand only after a second space so the shortcut
+c remains a literal subword inside longer text.
+nul 'c' '1' ' ' + ' ' > "c'est" deadkey(boundary) ' '
+notany(wordchars) 'c' '1' ' ' + ' ' > context(1) "c'est" deadkey(boundary) ' '
+
+nul 'c' '2' ' ' + ' ' > "ce sont" deadkey(boundary) ' '
+notany(wordchars) 'c' '2' ' ' + ' ' > context(1) "ce sont" deadkey(boundary) ' '
+
+nul 'q' 'c' 'q' deadkey(boundary) ' ' + ' ' > "qu'est-ce que" deadkey(boundary) ' '
+notany(wordchars) 'q' 'c' 'q' deadkey(boundary) ' ' + ' ' > context(1) "qu'est-ce que" deadkey(boundary) ' '
+
+nul 'y' 'a' deadkey(boundary) ' ' + ' ' > "il y a" deadkey(boundary) ' '
+notany(wordchars) 'y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "il y a" deadkey(boundary) ' '
+
+nul 'n' 'y' 'a' deadkey(boundary) ' ' + ' ' > "il n'y a" deadkey(boundary) ' '
+notany(wordchars) 'n' 'y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "il n'y a" deadkey(boundary) ' '
+
+nul 'q' 'u' 'n' deadkey(boundary) ' ' + ' ' > "quelqu'un" deadkey(boundary) ' '
+notany(wordchars) 'q' 'u' 'n' deadkey(boundary) ' ' + ' ' > context(1) "quelqu'un" deadkey(boundary) ' '
+
+nul 'q' 'c' 'h' deadkey(boundary) ' ' + ' ' > "quelque chose" deadkey(boundary) ' '
+notany(wordchars) 'q' 'c' 'h' deadkey(boundary) ' ' + ' ' > context(1) "quelque chose" deadkey(boundary) ' '
 
 c Cedilla
 'c' + 'w' > U+00E7

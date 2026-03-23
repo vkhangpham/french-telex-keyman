@@ -13,7 +13,7 @@
   },
   "lastModifiedDate": "2026-03-22T16:22:27.000Z",
   "packageFilename": "french_telex.kmp",
-  "packageFileSize": 3678,
+  "packageFileSize": 4030,
   "packageIncludes": [
     "welcome",
     "documentation"
