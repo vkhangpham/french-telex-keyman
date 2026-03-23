@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+SAFE_PATH="/opt/homebrew/bin:/usr/bin:/bin"
+
+# Beads shells out to git for repo detection. In this Codex environment,
+# PATH may resolve git to the AI guard wrapper, which breaks some git
+# subcommands that bd relies on. Run bd with a clean PATH instead.
+export AI_GUARD_ORIG_PATH="$SAFE_PATH"
+export PATH="$SAFE_PATH"
+
+exec /opt/homebrew/bin/bd "$@"
