@@ -29,13 +29,13 @@ jobs:
         run: npm install -g @keymanapp/kmc@18
 
       - name: Build keyboard package
-        run: kmc build "$GITHUB_WORKSPACE"
+        run: kmc build "$GITHUB_WORKSPACE/french_telex.kpj"
 
       - name: Verify release artifacts exist
         run: |
           test -f build/french_telex.kmp
           test -f build/french_telex.kmx
-          test -f build/keyman-french-telex.keyboard_info
+          find build -maxdepth 1 -name '*.keyboard_info' -print -quit | grep -q .
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -45,7 +45,7 @@ jobs:
           path: |
             build/french_telex.kmp
             build/french_telex.kmx
-            build/keyman-french-telex.keyboard_info
+            build/*.keyboard_info
 
   release:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
@@ -73,5 +73,5 @@ jobs:
           gh release upload "$TAG" \
             build/french_telex.kmp \
             build/french_telex.kmx \
-            build/keyman-french-telex.keyboard_info \
+            build/*.keyboard_info \
             --clobber
