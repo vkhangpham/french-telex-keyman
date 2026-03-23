@@ -64,13 +64,15 @@ jobs:
       - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
         run: |
-          if ! gh release view "$TAG" >/dev/null 2>&1; then
-            gh release create "$TAG" --generate-notes
+          if ! gh release view "$TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GH_REPO" --generate-notes
           fi
 
           gh release upload "$TAG" \
+            --repo "$GH_REPO" \
             build/french_telex.kmp \
             build/french_telex.kmx \
             build/*.keyboard_info \
