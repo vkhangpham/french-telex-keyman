@@ -1,43 +1,50 @@
 c French Telex - a small Keyman keyboard for French with Telex-like postfix rules
 c
 c Typing model:
-c   as  -> á
-c   es  -> é
-c   is  -> í
-c   os  -> ó
-c   us  -> ú
-c   af  -> à
-c   ef  -> è
-c   uf  -> ù
+c   a1  -> á
+c   e1  -> é
+c   i1  -> í
+c   o1  -> ó
+c   u1  -> ú
+c   a2  -> à
+c   e2  -> è
+c   u2  -> ù
 c   aa  -> â
 c   ee  -> ê
 c   ii  -> î
 c   oo  -> ô
 c   uu  -> û
-c   aw  -> ä
-c   ew  -> ë
-c   iw  -> ï
-c   ow  -> ö
-c   uw  -> ü
-c   yw  -> ÿ
-c   cw  -> ç
-c   o/  -> œ
-c   a/  -> æ
+c   a3  -> ä
+c   e3  -> ë
+c   i3  -> ï
+c   o3  -> ö
+c   u3  -> ü
+c   y3  -> ÿ
+c   c1  -> ç
+c   o4  -> œ
+c   a4  -> æ
 c
 c Double-space shortcuts:
-c   c1  -> c'est
-c   c2  -> ce sont
 c   qcq -> qu'est-ce que
 c   ya  -> il y a
 c   nya -> il n'y a
 c   qun -> quelqu'un
 c   qch -> quelque chose
+c   yat -> y-a-t'il
+c   nyat -> n'y-a-t'il
+c   cest -> c'est
+c   ceso -> ce sont
+c   resto -> restaurant
+c   jen -> je ne
+c   p -> pas
 c
 c Escape literal trigger characters with backslash:
-c   e\s -> es
-c   a\f -> af
-c   o\/ -> o/
-c   c\w -> cw
+c   e\1 -> e1
+c   a\2 -> a2
+c   u\3 -> u3
+c   o\4 -> o4
+c   c\1 -> c1
+c   \"  -> "
 c   \\  -> \
 
 store(&NAME) 'French Telex'
@@ -58,13 +65,19 @@ group(main) using keys
 c Escape prefix: backslash suppresses the next trigger character.
 + '\' > deadkey(1)
 deadkey(1) + '\' > '\'
-deadkey(1) + 's' > 's'
-deadkey(1) + 'S' > 'S'
-deadkey(1) + 'f' > 'f'
-deadkey(1) + 'F' > 'F'
-deadkey(1) + 'w' > 'w'
-deadkey(1) + 'W' > 'W'
-deadkey(1) + '/' > '/'
+deadkey(1) + '1' > '1'
+deadkey(1) + '2' > '2'
+deadkey(1) + '3' > '3'
+deadkey(1) + '4' > '4'
+deadkey(1) + '"' > '"'
+
+c French guillemets on double quote.
+nul + '"' > U+00AB ' '
+' ' + '"' > ' ' U+00AB ' '
+'(' + '"' > '(' U+00AB ' '
+'[' + '"' > '[' U+00AB ' '
+'{' + '"' > '{' U+00AB ' '
++ '"' > ' ' U+00BB
 
 c Word boundary: mark the end of a word on space.
 any(wordchars) + ' ' > index(wordchars,1) deadkey(boundary) ' '
@@ -74,80 +87,101 @@ deadkey(boundary) ' ' + [K_BKSP] > deadkey(boundary)
 
 c Double-space shortcuts: expand only after a second space so the shortcut
 c remains a literal subword inside longer text.
-nul 'c' '1' ' ' + ' ' > "c'est" deadkey(boundary) ' '
-notany(wordchars) 'c' '1' ' ' + ' ' > context(1) "c'est" deadkey(boundary) ' '
-
-nul 'c' '2' ' ' + ' ' > "ce sont" deadkey(boundary) ' '
-notany(wordchars) 'c' '2' ' ' + ' ' > context(1) "ce sont" deadkey(boundary) ' '
-
 nul 'q' 'c' 'q' deadkey(boundary) ' ' + ' ' > "qu'est-ce que" deadkey(boundary) ' '
 notany(wordchars) 'q' 'c' 'q' deadkey(boundary) ' ' + ' ' > context(1) "qu'est-ce que" deadkey(boundary) ' '
+nul 'Q' 'c' 'q' deadkey(boundary) ' ' + ' ' > "Qu'est-ce que" deadkey(boundary) ' '
+notany(wordchars) 'Q' 'c' 'q' deadkey(boundary) ' ' + ' ' > context(1) "Qu'est-ce que" deadkey(boundary) ' '
 
 nul 'y' 'a' deadkey(boundary) ' ' + ' ' > "il y a" deadkey(boundary) ' '
 notany(wordchars) 'y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "il y a" deadkey(boundary) ' '
+nul 'Y' 'a' deadkey(boundary) ' ' + ' ' > "Il y a" deadkey(boundary) ' '
+notany(wordchars) 'Y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "Il y a" deadkey(boundary) ' '
 
 nul 'n' 'y' 'a' deadkey(boundary) ' ' + ' ' > "il n'y a" deadkey(boundary) ' '
 notany(wordchars) 'n' 'y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "il n'y a" deadkey(boundary) ' '
+nul 'N' 'y' 'a' deadkey(boundary) ' ' + ' ' > "Il n'y a" deadkey(boundary) ' '
+notany(wordchars) 'N' 'y' 'a' deadkey(boundary) ' ' + ' ' > context(1) "Il n'y a" deadkey(boundary) ' '
 
 nul 'q' 'u' 'n' deadkey(boundary) ' ' + ' ' > "quelqu'un" deadkey(boundary) ' '
 notany(wordchars) 'q' 'u' 'n' deadkey(boundary) ' ' + ' ' > context(1) "quelqu'un" deadkey(boundary) ' '
+nul 'Q' 'u' 'n' deadkey(boundary) ' ' + ' ' > "Quelqu'un" deadkey(boundary) ' '
+notany(wordchars) 'Q' 'u' 'n' deadkey(boundary) ' ' + ' ' > context(1) "Quelqu'un" deadkey(boundary) ' '
 
 nul 'q' 'c' 'h' deadkey(boundary) ' ' + ' ' > "quelque chose" deadkey(boundary) ' '
 notany(wordchars) 'q' 'c' 'h' deadkey(boundary) ' ' + ' ' > context(1) "quelque chose" deadkey(boundary) ' '
+nul 'Q' 'c' 'h' deadkey(boundary) ' ' + ' ' > "Quelque chose" deadkey(boundary) ' '
+notany(wordchars) 'Q' 'c' 'h' deadkey(boundary) ' ' + ' ' > context(1) "Quelque chose" deadkey(boundary) ' '
+
+nul 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > "y-a-t'il" deadkey(boundary) ' '
+notany(wordchars) 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > context(1) "y-a-t'il" deadkey(boundary) ' '
+nul 'Y' 'a' 't' deadkey(boundary) ' ' + ' ' > "Y-a-t'il" deadkey(boundary) ' '
+notany(wordchars) 'Y' 'a' 't' deadkey(boundary) ' ' + ' ' > context(1) "Y-a-t'il" deadkey(boundary) ' '
+
+nul 'n' 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > "n'y-a-t'il" deadkey(boundary) ' '
+notany(wordchars) 'n' 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > context(1) "n'y-a-t'il" deadkey(boundary) ' '
+nul 'N' 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > "N'y-a-t'il" deadkey(boundary) ' '
+notany(wordchars) 'N' 'y' 'a' 't' deadkey(boundary) ' ' + ' ' > context(1) "N'y-a-t'il" deadkey(boundary) ' '
+
+nul 'c' 'e' 's' 't' deadkey(boundary) ' ' + ' ' > "c'est" deadkey(boundary) ' '
+notany(wordchars) 'c' 'e' 's' 't' deadkey(boundary) ' ' + ' ' > context(1) "c'est" deadkey(boundary) ' '
+nul 'C' 'e' 's' 't' deadkey(boundary) ' ' + ' ' > "C'est" deadkey(boundary) ' '
+notany(wordchars) 'C' 'e' 's' 't' deadkey(boundary) ' ' + ' ' > context(1) "C'est" deadkey(boundary) ' '
+
+nul 'c' 'e' 's' 'o' deadkey(boundary) ' ' + ' ' > "ce sont" deadkey(boundary) ' '
+notany(wordchars) 'c' 'e' 's' 'o' deadkey(boundary) ' ' + ' ' > context(1) "ce sont" deadkey(boundary) ' '
+nul 'C' 'e' 's' 'o' deadkey(boundary) ' ' + ' ' > "Ce sont" deadkey(boundary) ' '
+notany(wordchars) 'C' 'e' 's' 'o' deadkey(boundary) ' ' + ' ' > context(1) "Ce sont" deadkey(boundary) ' '
+
+nul 'r' 'e' 's' 't' 'o' deadkey(boundary) ' ' + ' ' > "restaurant" deadkey(boundary) ' '
+notany(wordchars) 'r' 'e' 's' 't' 'o' deadkey(boundary) ' ' + ' ' > context(1) "restaurant" deadkey(boundary) ' '
+nul 'R' 'e' 's' 't' 'o' deadkey(boundary) ' ' + ' ' > "Restaurant" deadkey(boundary) ' '
+notany(wordchars) 'R' 'e' 's' 't' 'o' deadkey(boundary) ' ' + ' ' > context(1) "Restaurant" deadkey(boundary) ' '
+
+nul 'j' 'e' 'n' deadkey(boundary) ' ' + ' ' > "je ne" deadkey(boundary) ' '
+notany(wordchars) 'j' 'e' 'n' deadkey(boundary) ' ' + ' ' > context(1) "je ne" deadkey(boundary) ' '
+nul 'J' 'e' 'n' deadkey(boundary) ' ' + ' ' > "Je ne" deadkey(boundary) ' '
+notany(wordchars) 'J' 'e' 'n' deadkey(boundary) ' ' + ' ' > context(1) "Je ne" deadkey(boundary) ' '
+
+nul 'p' deadkey(boundary) ' ' + ' ' > "pas" deadkey(boundary) ' '
+notany(wordchars) 'p' deadkey(boundary) ' ' + ' ' > context(1) "pas" deadkey(boundary) ' '
+nul 'P' deadkey(boundary) ' ' + ' ' > "Pas" deadkey(boundary) ' '
+notany(wordchars) 'P' deadkey(boundary) ' ' + ' ' > context(1) "Pas" deadkey(boundary) ' '
 
 c Cedilla
-'c' + 'w' > U+00E7
-'C' + 'w' > U+00C7
-'c' + 'W' > U+00C7
-'C' + 'W' > U+00C7
+'c' + '1' > U+00E7
+'C' + '1' > U+00C7
 
 c Ligatures
-'o' + '/' > U+0153
-'O' + '/' > U+0152
-'a' + '/' > U+00E6
-'A' + '/' > U+00C6
+'o' + '4' > U+0153
+'O' + '4' > U+0152
+'a' + '4' > U+00E6
+'A' + '4' > U+00C6
 
-c Acute accent: French-oriented default, only on e/E.
-'a' + 's' > U+00E1
-'A' + 's' > U+00C1
-'a' + 'S' > U+00C1
-'A' + 'S' > U+00C1
+c Acute accent: vowel + 1
+'a' + '1' > U+00E1
+'A' + '1' > U+00C1
 
-'e' + 's' > U+00E9
-'E' + 's' > U+00C9
-'e' + 'S' > U+00C9
-'E' + 'S' > U+00C9
+'e' + '1' > U+00E9
+'E' + '1' > U+00C9
 
-'i' + 's' > U+00ED
-'I' + 's' > U+00CD
-'i' + 'S' > U+00CD
-'I' + 'S' > U+00CD
+'i' + '1' > U+00ED
+'I' + '1' > U+00CD
 
-'o' + 's' > U+00F3
-'O' + 's' > U+00D3
-'o' + 'S' > U+00D3
-'O' + 'S' > U+00D3
+'o' + '1' > U+00F3
+'O' + '1' > U+00D3
 
-'u' + 's' > U+00FA
-'U' + 's' > U+00DA
-'u' + 'S' > U+00DA
-'U' + 'S' > U+00DA
+'u' + '1' > U+00FA
+'U' + '1' > U+00DA
 
 c Grave accent: a, e, u
-'a' + 'f' > U+00E0
-'A' + 'f' > U+00C0
-'a' + 'F' > U+00C0
-'A' + 'F' > U+00C0
+'a' + '2' > U+00E0
+'A' + '2' > U+00C0
 
-'e' + 'f' > U+00E8
-'E' + 'f' > U+00C8
-'e' + 'F' > U+00C8
-'E' + 'F' > U+00C8
+'e' + '2' > U+00E8
+'E' + '2' > U+00C8
 
-'u' + 'f' > U+00F9
-'U' + 'f' > U+00D9
-'u' + 'F' > U+00D9
-'U' + 'F' > U+00D9
+'u' + '2' > U+00F9
+'U' + '2' > U+00D9
 
 c Circumflex: doubled vowel, Telex-like
 'a' + 'a' > U+00E2
@@ -180,6 +214,5 @@ c Circumflex: doubled vowel, Telex-like
 'y' + 'Y' > U+0176
 'Y' + 'Y' > U+0176
 
-c Diaeresis: vowel + x
-any(dia_base) + 'w' > index(dia_out,1)
-any(dia_base) + 'W' > index(dia_out,1)
+c Diaeresis (colon): vowel + 3
+any(dia_base) + '3' > index(dia_out,1)

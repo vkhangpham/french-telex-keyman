@@ -16,18 +16,19 @@ French version: [README.fr.md](/Users/kylepham/Code/keyman-french-telex/README.f
 
 ## Typing Rules
 
-- Acute: `as es is os us` -> `á é í ó ú`
-- Grave: `af ef uf` -> `à è ù`
+- Acute: `a1 e1 i1 o1 u1` -> `á é í ó ú`
+- Grave: `a2 e2 u2` -> `à è ù`
 - Circumflex: `aa ee ii oo uu` -> `â ê î ô û`
-- Diaeresis: `aw ew iw ow uw yw` -> `ä ë ï ö ü ÿ`
-- Cedilla: `cw` -> `ç`
-- Ligatures: `o/` -> `œ`, `a/` -> `æ`
+- Diaeresis: `a3 e3 i3 o3 u3 y3` -> `ä ë ï ö ü ÿ`
+- Cedilla: `c1` -> `ç`
+- Ligatures: `o4` -> `œ`, `a4` -> `æ`
+- Quotes: `"` opens with `« ` at the start of text or after a space, and otherwise inserts ` »`
 
 ## Literal Text
 
-Two ways to keep trigger sequences literal:
+Use an explicit escape with backslash to keep trigger sequences literal:
 
-- Explicit escape with backslash: `a\s` -> `as`, `e\s` -> `es`, `c\w` -> `cw`
+- `a\1` -> `a1`, `e\2` -> `e2`, `u\3` -> `u3`, `o\4` -> `o4`, `c\1` -> `c1`, `\"` -> `"`
 
 The backslash escape is the only literal-text rule. This avoids ambiguous cases in real French words.
 
@@ -37,26 +38,36 @@ Typing a space inserts an invisible word-boundary marker. A custom backspace rul
 
 Example:
 
-- `a` then `space` then `backspace` then `s` -> `as`
+- `a` then `space` then `backspace` then `1` -> `a1`
 
 ## Double-Space Shortcuts
 
 Some common shortcuts expand only when you press `space` twice after the shortcut. The first space keeps the shortcut literal; the second space commits the expansion, so it won't trigger inside a larger word.
 
-- `c1` then `space` then `space` -> `c'est `
-- `c2` then `space` then `space` -> `ce sont `
 - `qcq` then `space` then `space` -> `qu'est-ce que `
+- `Qcq` then `space` then `space` -> `Qu'est-ce que `
 - `ya` then `space` then `space` -> `il y a `
+- `Ya` then `space` then `space` -> `Il y a `
 - `nya` then `space` then `space` -> `il n'y a `
+- `Nya` then `space` then `space` -> `Il n'y a `
 - `qun` then `space` then `space` -> `quelqu'un `
+- `Qun` then `space` then `space` -> `Quelqu'un `
 - `qch` then `space` then `space` -> `quelque chose `
+- `Qch` then `space` then `space` -> `Quelque chose `
+- `yat` then `space` then `space` -> `y-a-t'il `
+- `nyat` then `space` then `space` -> `n'y-a-t'il `
+- `cest` then `space` then `space` -> `c'est `
+- `ceso` then `space` then `space` -> `ce sont `
+- `resto` then `space` then `space` -> `restaurant `
+- `jen` then `space` then `space` -> `je ne `
+- `p` then `space` then `space` -> `pas `
 
 ## Examples
 
-- `eslesves` -> `élévé`
-- `francwais` -> `français`
+- `e1le2ve` -> `élève`
+- `garc1on` -> `garçon`
 - `maiitre` -> `maître`
-- `Noewl` -> `Noël`
+- `No3el` -> `Noël`
 - `hootel` -> `hôtel`
 
 ## Source
