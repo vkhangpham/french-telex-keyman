@@ -32,6 +32,19 @@ Use an explicit escape with backslash to keep trigger sequences literal:
 
 The backslash escape is the only literal-text rule. This avoids ambiguous cases in real French words.
 
+## Terminal Fallback
+
+Some terminal apps do not give Keyman enough surrounding text to rewrite the previous character reliably. For those cases, French Telex also supports an explicit compose path after backslash:
+
+- `\1a \1e \1i \1o \1u` -> `á é í ó ú`
+- `\2a \2e \2u` -> `à è ù`
+- `\5a \5e \5i \5o \5u \5y` -> `â ê î ô û ŷ`
+- `\3a \3e \3i \3o \3u \3y` -> `ä ë ï ö ü ÿ`
+- `\1c` -> `ç`
+- `\4o` -> `œ`, `\4a` -> `æ`
+
+This mode is intended as a compatibility fallback for apps such as Ghostty or Neovim. The usual postfix rules still work in compliant apps.
+
 ## Word Boundaries
 
 Typing a space inserts an invisible word-boundary marker. A custom backspace rule preserves that marker if you then delete the space again, so accent rules no longer modify the previous word.

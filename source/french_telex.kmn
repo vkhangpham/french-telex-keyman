@@ -43,6 +43,12 @@ c   e\1 -> e1
 c   a\2 -> a2
 c   u\3 -> u3
 c   o\4 -> o4
+c   \1e -> é
+c   \2e -> è
+c   \5e -> ê
+c   \3e -> ë
+c   \1c -> ç
+c   \4o -> œ
 c   c\1 -> c1
 c   \"  -> "
 c   \\  -> \
@@ -57,19 +63,69 @@ store(&MNEMONICLAYOUT) '1'
 begin Unicode > use(main)
 
 store(wordchars) 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàÀâÂæÆçÇèÈéÉêÊëËîÎïÏôÔœŒùÙûÛüÜÿŸ'
+store(acute_base) 'aeiouAEIOU'
+store(acute_out) 'áéíóúÁÉÍÓÚ'
+store(grave_base) 'aeuAEU'
+store(grave_out) 'àèùÀÈÙ'
+store(circ_base) 'aeiouyAEIOUY'
+store(circ_out) 'âêîôûŷÂÊÎÔÛŶ'
 store(dia_base) 'aeiouyAEIOUY'
 store(dia_out)  'äëïöüÿÄËÏÖÜŸ'
+store(prefix_literal_tail) '0123456789 .,;:!?-_=+[]{}()/@#$%^&*|`~<>"'
+store(prefix_literal_acute) 'bdfghjklmnpqrstvwxyzBDFGHJKLMNPQRSTVWXYZ'
+store(prefix_literal_grave) 'bcdfghijklmnopqrstvwxyzBCDFGHIJKLMNOPQRSTVWXYZ'
+store(prefix_literal_dia) 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ'
+store(prefix_literal_lig) 'bcdefghijklmnpqrstuvwxyzBCDEFGHIJKLMNPQRSTUVWXYZ'
+store(prefix_literal_circ) 'bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ'
 
 group(main) using keys
 
 c Escape prefix: backslash suppresses the next trigger character.
 + '\' > deadkey(1)
 deadkey(1) + '\' > '\'
-deadkey(1) + '1' > '1'
-deadkey(1) + '2' > '2'
-deadkey(1) + '3' > '3'
-deadkey(1) + '4' > '4'
+deadkey(1) + '1' > deadkey(prefix_acute)
+deadkey(1) + '2' > deadkey(prefix_grave)
+deadkey(1) + '3' > deadkey(prefix_dia)
+deadkey(1) + '4' > deadkey(prefix_lig)
+deadkey(1) + '5' > deadkey(prefix_circ)
 deadkey(1) + '"' > '"'
+
+c Terminal-safe compose fallback for non-compliant apps such as some terminals.
+c These rules avoid replacing previously committed text.
+deadkey(prefix_acute) + any(acute_base) > index(acute_out,2)
+deadkey(prefix_acute) + 'c' > U+00E7
+deadkey(prefix_acute) + 'C' > U+00C7
+deadkey(prefix_acute) + any(prefix_literal_acute) > '1' index(prefix_literal_acute,2)
+deadkey(prefix_acute) + any(prefix_literal_tail) > '1' index(prefix_literal_tail,2)
+deadkey(prefix_acute) + U+0027 > '1' U+0027
+deadkey(prefix_acute) + '\' > '1' '\'
+
+deadkey(prefix_grave) + any(grave_base) > index(grave_out,2)
+deadkey(prefix_grave) + any(prefix_literal_grave) > '2' index(prefix_literal_grave,2)
+deadkey(prefix_grave) + any(prefix_literal_tail) > '2' index(prefix_literal_tail,2)
+deadkey(prefix_grave) + U+0027 > '2' U+0027
+deadkey(prefix_grave) + '\' > '2' '\'
+
+deadkey(prefix_dia) + any(dia_base) > index(dia_out,2)
+deadkey(prefix_dia) + any(prefix_literal_dia) > '3' index(prefix_literal_dia,2)
+deadkey(prefix_dia) + any(prefix_literal_tail) > '3' index(prefix_literal_tail,2)
+deadkey(prefix_dia) + U+0027 > '3' U+0027
+deadkey(prefix_dia) + '\' > '3' '\'
+
+deadkey(prefix_lig) + 'o' > U+0153
+deadkey(prefix_lig) + 'O' > U+0152
+deadkey(prefix_lig) + 'a' > U+00E6
+deadkey(prefix_lig) + 'A' > U+00C6
+deadkey(prefix_lig) + any(prefix_literal_lig) > '4' index(prefix_literal_lig,2)
+deadkey(prefix_lig) + any(prefix_literal_tail) > '4' index(prefix_literal_tail,2)
+deadkey(prefix_lig) + U+0027 > '4' U+0027
+deadkey(prefix_lig) + '\' > '4' '\'
+
+deadkey(prefix_circ) + any(circ_base) > index(circ_out,2)
+deadkey(prefix_circ) + any(prefix_literal_circ) > '5' index(prefix_literal_circ,2)
+deadkey(prefix_circ) + any(prefix_literal_tail) > '5' index(prefix_literal_tail,2)
+deadkey(prefix_circ) + U+0027 > '5' U+0027
+deadkey(prefix_circ) + '\' > '5' '\'
 
 c French guillemets on double quote.
 nul + '"' > U+00AB ' '

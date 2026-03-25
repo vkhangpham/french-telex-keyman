@@ -37,6 +37,19 @@ Pour conserver une suite littérale sans déclencher une règle, utilisez l'anti
 
 L'antislash est la seule règle d'échappement littérale. Cela évite les ambiguïtés dans les vrais mots français.
 
+## Mode de secours pour terminaux
+
+Certaines applications terminal ne donnent pas assez de contexte à Keyman pour réécrire correctement le caractère précédent. Pour ces cas, French Telex propose aussi une composition explicite après antislash :
+
+- `\1a \1e \1i \1o \1u` -> `á é í ó ú`
+- `\2a \2e \2u` -> `à è ù`
+- `\5a \5e \5i \5o \5u \5y` -> `â ê î ô û ŷ`
+- `\3a \3e \3i \3o \3u \3y` -> `ä ë ï ö ü ÿ`
+- `\1c` -> `ç`
+- `\4o` -> `œ`, `\4a` -> `æ`
+
+Ce mode sert de solution de compatibilité pour des applications comme Ghostty ou Neovim. Les règles postfixées habituelles continuent de fonctionner dans les applications compatibles.
+
 ## Frontières de mot
 
 Quand vous tapez un espace, le clavier insère un marqueur invisible de fin de mot. Si vous effacez ensuite cet espace avec `Backspace`, ce marqueur est conservé, ce qui empêche les règles d'accent de modifier rétroactivement le mot précédent.

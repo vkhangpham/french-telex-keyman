@@ -45,6 +45,13 @@ any(dia_base) + 'w' > index(dia_out,1)
 any(dia_base) + 'W' > index(dia_out,1)
 ```
 
+- Terminal-safe compose after backslash, which avoids replacing previously committed text:
+
+```kmn
+deadkey(1) + '5' > deadkey(prefix_circ)
+deadkey(prefix_circ) + any(circ_base) > index(circ_out,2)
+```
+
 - Double-space shortcut that only expands at a word boundary:
 
 ```kmn
@@ -56,6 +63,7 @@ notany(wordchars) 'c' 'd' 'l' 't' deadkey(boundary) ' ' + ' ' > context(1) "cord
 
 - Keyman rules are matched top to bottom. Put more specific rules before more general ones.
 - If a new trigger character should be escapable with backslash, add it under the `deadkey(1)` escape rules near the top of the file.
+- If a rule should work in terminals or other non-compliant apps, prefer an explicit compose sequence that does not require replacing the previously typed character.
 - If a rule should only fire within a word, follow the existing direct postfix style such as `'e' + 's' > ...`.
 - If a rule should only fire after a completed word or shortcut, reuse the existing `deadkey(boundary)` pattern instead of matching a raw space directly.
 - Keep uppercase behavior explicit. The current keyboard usually defines lower, upper, and mixed-case variants instead of relying on a single rule.
